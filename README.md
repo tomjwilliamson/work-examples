@@ -2,7 +2,7 @@
 
 Examples of Angular work.
 
-You'll find two example SPA projects, containing app, controller and views.
+You'll find two example SPA projects, containing an app, controller and views.
 
 There are also examples of a Service, directives and two re-usable modules.
 
