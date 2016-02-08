@@ -1,0 +1,18 @@
+<ion-view name="login-view" class="scroll-bg" hide-nav-bar="true">
+  <form>
+    <ion-content class="padding" scroll="false">
+      <div class="logo-login">The List</div>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <input type="email" placeholder="Username" ng-model="user.email">
+        </label>
+      </div>
+      <div class="button button-outline button-positive button-block" ng-click="formLogin()">Sign In</div>
+      <p class="error-message" ng-if="loginError !== ''">{{ loginError }}</p>
+    </ion-content>
+  </form>
+
+  <div class="drinkaware-logo">
+    <img src="/img/drinkaware.png">
+  </div>
+</ion-view>

@@ -1,0 +1,374 @@
+<tr class="drawer drawer-device-{-drawerDevice-} drawer-orientation-{-drawerOrientation-}">
+  <td class="remove-padding drawer-wrapper" colspan="{- drawerColspan -}" ng-if="!playerLoaded">
+    <div class="container-blue drawer-loader">
+      <div class="live-loader">
+        <svg viewBox="0 0 64 64">
+          <g>
+            <circle cx="16" cy="32" stroke-width="0" r="3" fill="currentColor">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5" repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="32" cy="32" stroke-width="0" r="3.7773" fill="currentColor">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5" repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="48" cy="32" stroke-width="0" r="4.7773" fill="currentColor">
+              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6" repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+            </circle>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </td>
+  <td class="remove-padding drawer-wrapper" colspan="{- drawerColspan -}" ng-if="playerLoaded">
+    <div class="row container-blue remove-horizontal-margins">
+      <div class="col-xs-6 col-sm-3 col-md-2 drawer-player">
+        <span class="circle-crop circle-border">
+          <img class="img-responsive" ng-src="{-player.Player.Image != '' ? player.Player.Image : defaultAvatar -}" alt="{- player.Player.Name -}">
+        </span>
+        <p class="text-medium text-align-center">{- player.Player.Name -}</p>
+      </div>
+      <div class="col-xs-6 col-sm-9 col-md-2 drawer-player-info">
+        <div class="drawer-tablet-float">
+          <h3 ng-if="drawerDevice !== 'mobile'">Quick Stats</h3>
+          <div class="live-round-select" ng-if="drawerDevice !== 'mobile'">
+            <label>ROUND</label>
+            <div class="rounds">
+              <div class="control-radio-single" ng-class="{active:(chartRound == 0), disabled:($root.championshipFeed.CurrentRound < 1 || player.RoundsPlayed < 1)}">
+                <span class="control-view-label" ng-click="setRound(0)">1</span>
+              </div>
+              <div class="control-radio-single" ng-class="{active:(chartRound == 1 && player.RoundsPlayed != 1), disabled:($root.championshipFeed.CurrentRound < 2 || player.RoundsPlayed < 2)}">
+                <span class="control-view-label" ng-click="setRound(1)">2</span>
+              </div>
+              <div class="control-radio-single" ng-class="{active:(chartRound == 2 && player.RoundsPlayed != 2), disabled:($root.championshipFeed.CurrentRound < 3 || player.RoundsPlayed < 3)}">
+                <span class="control-view-label" ng-click="setRound(2)">3</span>
+              </div>
+              <div class="control-radio-single" ng-class="{active:(chartRound == 3 && player.RoundsPlayed != 2), disabled:($root.championshipFeed.CurrentRound < 4 || player.RoundsPlayed < 4)}">
+                <span class="control-view-label" ng-click="setRound(3)">4</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="drawer-tablet-float">
+          <p>Age: {- player.Player.Age -}</p>
+          <!-- <p>No. of Opens: {- player.Player.NumberOfOpens -}</p> -->
+          <p>Group: {- player.Player.Group == 0 ? 'n/a' : player.Player.Group -}</p>
+          <a href="{- player.Player.ProfileLink -}" class="drawer-player-profile-link">
+            Player profile
+            <span class="icon-stack icon-stack-right icon-lg">
+              <span class="icon icon-chevron-right-sm"></span>
+              <span class="icon icon-circle-outline"></span>
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="live-round-select live-round-select-mobile clearfix" ng-if="drawerDevice === 'mobile'">
+        <h3 class="clearfix">Quick Stats</h3>
+        <div class="rounds">
+          <select class="custom-select form-control" ng-model="$parent.chartRound">
+            <option value="0" ng-if="!($root.championshipFeed.CurrentRound < 1 || player.RoundsPlayed < 1)">Round 1</option>
+            <option value="1" ng-if="!($root.championshipFeed.CurrentRound < 2 || player.RoundsPlayed < 2)">Round 2</option>
+            <option value="2" ng-if="!($root.championshipFeed.CurrentRound < 3 || player.RoundsPlayed < 3)">Round 3</option>
+            <option value="3" ng-if="!($root.championshipFeed.CurrentRound < 4 || player.RoundsPlayed < 4)">Round 4</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-8 drawer-stats-wrapper">
+        <hr class="hidden-md hidden-lg" ng-if="drawerDevice !== 'mobile'">
+        <div class="row">
+          <div class="col-xs-6 col-sm-3 player-stats text-align-center">
+            <p class="text-medium text-white">{- player.Stats[chartRound].Graph1.Label -}</p>
+            <div chart
+                 chart-value="player.Stats[chartRound].Graph1.Value"
+                 chart-show-percentage="player.Stats[chartRound].Graph1.show_percentage"
+                 chart-max="player.Stats[chartRound].Graph1.Max"
+                 chart-open="drawerOpen"
+                 chart-colour="'light'"
+                 chart-size="'large'"
+            ></div>
+          </div>
+          <div class="col-xs-6 col-sm-3 player-stats text-align-center">
+            <p class="text-medium text-white">{- player.Stats[chartRound].Graph2.Label -}</p>
+            <div chart
+                 chart-value="player.Stats[chartRound].Graph2.Value"
+                 chart-show-percentage="player.Stats[chartRound].Graph2.show_percentage"
+                 chart-max="player.Stats[chartRound].Graph2.Max"
+                 chart-open="drawerOpen"
+                 chart-colour="'light'"
+                 chart-size="'large'"
+            ></div>
+          </div>
+          <div class="col-xs-6 col-sm-3 player-stats text-align-center">
+            <p class="text-medium text-white">{- player.Stats[chartRound].Graph3.Label -}</p>
+            <div chart
+                 chart-value="player.Stats[chartRound].Graph3.Value === 0 ? 0.1 : player.Stats[chartRound].Graph3.Value"
+                 chart-show-percentage="player.Stats[chartRound].Graph3.show_percentage"
+                 chart-max="player.Stats[chartRound].Graph3.Max"
+                 chart-open="drawerOpen"
+                 chart-colour="'light'"
+                 chart-size="'large'"
+                 chart-type="'donut'"
+            ></div>
+          </div>
+          <div class="col-xs-6 col-sm-3 player-stats text-align-center drawer-stats-putts">
+            <p class="text-medium text-white">No. of putts</p>
+            <div class="putt-stats">
+              <div chart
+                   chart-open="drawerOpen"
+                   chart-type="'ticker'"
+                   chart-value="player.Stats[chartRound].Putts"
+                   chart-startval="player.Stats[chartRound].Putts"
+                   chart-finalval="player.Stats[chartRound].Putts"
+                   chart-size="'large'"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <a href="{- player.Player.ProfileLink -}" class="drawer-player-stats-link">
+          Player stats
+          <span class="icon-stack icon-stack-right icon-lg">
+            <span class="icon icon-chevron-right-sm"></span>
+            <span class="icon icon-circle-outline"></span>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="row colour-bg-blue-dark remove-horizontal-margins" ng-if="drawerDevice !== 'mobile'">
+      <div class="col-xs-12 drawer-key-md-2 remove-padding">
+        <div class="drawer-key">
+          <div class="drawer-key-header">
+            KEY
+          </div>
+          <div class="drawer-key-content">
+            <span class="drawer-box ld-box-eagle"></span><p class="drawer-key-content-define">Eagles/Better</p>
+          </div>
+          <div class="drawer-key-content">
+            <span class="drawer-box ld-box-birdie"></span><p class="drawer-key-content-define">Birdies</p>
+          </div>
+          <div class="drawer-key-content">
+            <span class="drawer-box ld-box-bogey"></span><p class="drawer-key-content-define">Bogeys</p>
+          </div>
+          <div class="drawer-key-content">
+            <span class="drawer-box ld-box-dblbogey"></span><p class="drawer-key-content-define">Dbl Bogeys/Worse</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 drawer-scores-md-10 remove-padding rm-xs-margin">
+        <div class="drawer-scores table-responsive">
+          <table class="table drawer-scores-table">
+            <thead>
+              <tr>
+                <th class="drawer-score-rounds">
+                  <span>RND</span>
+                </th>
+                <th class="drawer-score-sm">1</th>
+                <th class="drawer-score-sm">2</th>
+                <th class="drawer-score-sm">3</th>
+                <th class="drawer-score-sm">4</th>
+                <th class="drawer-score-sm">5</th>
+                <th class="drawer-score-sm">6</th>
+                <th class="drawer-score-sm">7</th>
+                <th class="drawer-score-sm">8</th>
+                <th class="drawer-score-sm">9</th>
+                <th class="drawer-score-md live-score-out">OUT</th>
+                <th class="drawer-score-sm">10</th>
+                <th class="drawer-score-sm">11</th>
+                <th class="drawer-score-sm">12</th>
+                <th class="drawer-score-sm">13</th>
+                <th class="drawer-score-sm">14</th>
+                <th class="drawer-score-sm">15</th>
+                <th class="drawer-score-sm">16</th>
+                <th class="drawer-score-sm">17</th>
+                <th class="drawer-score-sm">18</th>
+                <th class="drawer-score-md">IN</th>
+                <th class="drawer-score-md">PAR</th>
+                <th class="drawer-score-total">
+                  <span class="hidden-xs">TOTAL</span>
+                  <span class="visible-xs">TTL</span>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr ng-repeat="round in player.Scorecard">
+                <td class="drawer-score-rounds">{- round.Round -}</td>
+                <td class="drawer-score-sm" ng-repeat="hole in round.Holes.slice(0,9)">
+                  <span class="drawer-box" ng-class="parDisplay(hole, parFeedDrawer)" ng-if="hole.Score">{- hole.Score -}</span>
+                </td>
+                <td class="drawer-score-md"><span class="drawer-box ld-box-inout" ng-if="round.OutTotal">{- round.OutTotal -}</span></td>
+                <td class="drawer-score-sm" ng-repeat="hole in round.Holes.slice(9,18)">
+                  <span class="drawer-box" ng-class="parDisplay(hole, parFeedDrawer)" ng-if="hole.Score">{- hole.Score -}</span>
+                </td>
+                <td class="drawer-score-md"><span class="drawer-box ld-box-inout" ng-if="round.InTotal">{- round.InTotal -}</span></td>
+                <td class="drawer-score-md"><span class="drawer-box ld-box-total" ng-if="round.ToPar">{- round.ToPar -}</span></td>
+                <td class="drawer-score-total"><span class="drawer-box ld-box-total" ng-if="round.Total">{- round.Total -}</span></td>
+              </tr>
+            </tbody>
+
+            <tfoot>
+              <tr>
+                <td class="drawer-score-rounds">
+                  <span class="hidden-md hidden-lg">PAR</span>
+                  <span class="hidden-xs hidden-sm">PAR ({- parFeedDrawer.TotalPar -})</span>
+                </td>
+
+                <td class="ld-td-sm" ng-repeat="hole in parFeed.Holes"><span class="ld-th-knockback">{- hole.HoleNumber -}</span>{- hole.Par -}</td>
+
+                <td class="drawer-score-sm" ng-repeat="hole in parFeedDrawer.Holes.slice(0,9)">{- hole.Par -}</td>
+                <td class="drawer-score-md live-score-out">{- parFeedDrawer.OutPar -}</td>
+                <td class="drawer-score-sm" ng-repeat="hole in parFeedDrawer.Holes.slice(9,18)">{- hole.Par -}</td>
+                <td class="drawer-score-md">{- parFeedDrawer.InPar -}</td>
+                <td class="drawer-score-md"><span class="drawer-box ld-box-total">{- player.TotalPar -}</span></td>
+                <td class="drawer-score-total"><span class="drawer-box ld-box-total">{- player.TotalShots -}</span></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row colour-bg-blue-dark remove-horizontal-margins remove-padding" ng-if="drawerDevice === 'mobile'">
+      <div class="drawer-key-md-2 remove-padding" ng-class="{'col-xs-12': !isLandscape(drawerOrientation), 'col-xs-4': isLandscape(drawerOrientation)}">
+        <div class="drawer-key drawer-key-mobile" ng-class="{'drawer-key-side': isLandscape(drawerOrientation)}">
+          <div class="drawer-key-header">
+            KEY
+          </div>
+          <div class="drawer-key-content">
+            <span class="drawer-box ld-box-eagle"></span><p class="drawer-key-content-define">Eagles/Better</p>
+          </div>
+          <div class="drawer-key-content">
+            <span class="drawer-box ld-box-birdie"></span><p class="drawer-key-content-define">Birdies</p>
+          </div>
+          <div class="drawer-key-content">
+            <span class="drawer-box ld-box-bogey"></span><p class="drawer-key-content-define">Bogeys</p>
+          </div>
+          <div class="drawer-key-content">
+            <span class="drawer-box ld-box-dblbogey"></span><p class="drawer-key-content-define">Dbl Bogeys/Worse</p>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix">
+        <div class="drawer-scores-md-10 remove-padding rm-xs-margin" ng-class="{'col-xs-12': !isLandscape(drawerOrientation), 'col-xs-8': isLandscape(drawerOrientation)}">
+          <div class="drawer-scores" ng-if="isCurrentScorecard(0)">
+            <table class="drawer-scores-table">
+              <thead>
+                <tr>
+                  <th class="drawer-score-rounds">
+                    <span>RND</span>
+                  </th>
+                  <th class="drawer-score-sm">1</th>
+                  <th class="drawer-score-sm">2</th>
+                  <th class="drawer-score-sm">3</th>
+                  <th class="drawer-score-sm">4</th>
+                  <th class="drawer-score-sm">5</th>
+                  <th class="drawer-score-sm">6</th>
+                  <th class="drawer-score-sm">7</th>
+                  <th class="drawer-score-sm">8</th>
+                  <th class="drawer-score-sm">9</th>
+                  <th class="drawer-score-md live-score-out">OUT</th>
+                  <th class="drawer-score-md" ng-if="isLandscape(drawerOrientation)">PAR</th>
+                  <th class="drawer-score-total" ng-if="isLandscape(drawerOrientation)">
+                    <span class="hidden-xs">TOTAL</span>
+                    <span class="visible-xs">TTL</span>
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr ng-repeat="round in player.Scorecard">
+                  <td class="drawer-score-rounds">{- round.Round -}</td>
+                  <td class="drawer-score-sm" ng-repeat="hole in round.Holes.slice(0,9)">
+                    <span class="drawer-box" ng-class="parDisplay(hole, parFeedDrawer)" ng-if="hole.Score">{- hole.Score -}</span>
+                  </td>
+                  <td class="drawer-score-md"><span class="drawer-box ld-box-inout">{- round.OutTotal -}</span></td>
+                  <td class="drawer-score-md" ng-if="isLandscape(drawerOrientation)"><span class="drawer-box ld-box-total">{- round.ToPar -}</span></td>
+                  <td class="drawer-score-total" ng-if="isLandscape(drawerOrientation)"><span class="drawer-box ld-box-total">{- round.Total -}</span></td>
+                </tr>
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <td class="drawer-score-rounds">
+                    <span class="hidden-md hidden-lg">PAR</span>
+                    <span class="hidden-xs hidden-sm">PAR ({- parFeedDrawer.TotalPar -})</span>
+                  </td>
+
+                  <th class="ld-td-sm" ng-repeat="hole in parFeed.Holes"><span class="ld-th-knockback">{- hole.HoleNumber -}</span>{- hole.Par -}</th>
+
+                  <td class="drawer-score-sm" ng-repeat="hole in parFeedDrawer.Holes.slice(0,9)">{- hole.Par -}</td>
+                  <td class="drawer-score-md live-score-out">{- parFeedDrawer.OutPar -}</td>
+
+                  <td class="drawer-score-md" ng-if="isLandscape(drawerOrientation)"><span class="drawer-box ld-box-total">{- player.TotalPar -}</span></td>
+                  <td class="drawer-score-total" ng-if="isLandscape(drawerOrientation)"><span class="drawer-box ld-box-total">{- player.TotalShots -}</span></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div class="drawer-scores" ng-if="isCurrentScorecard(1)">
+            <table class="drawer-scores-table">
+              <thead>
+                <tr>
+                  <th class="drawer-score-rounds">
+                    <span>RND</span>
+                  </th>
+
+                  <th class="drawer-score-sm">10</th>
+                  <th class="drawer-score-sm">11</th>
+                  <th class="drawer-score-sm">12</th>
+                  <th class="drawer-score-sm">13</th>
+                  <th class="drawer-score-sm">14</th>
+                  <th class="drawer-score-sm">15</th>
+                  <th class="drawer-score-sm">16</th>
+                  <th class="drawer-score-sm">17</th>
+                  <th class="drawer-score-sm">18</th>
+                  <th class="drawer-score-md">IN</th>
+                  <th class="drawer-score-md" ng-if="isLandscape(drawerOrientation)">PAR</th>
+                  <th class="drawer-score-total" ng-if="isLandscape(drawerOrientation)">
+                    <span class="hidden-xs">TOTAL</span>
+                    <span class="visible-xs">TTL</span>
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr ng-repeat="round in player.Scorecard">
+                  <td class="drawer-score-rounds">{- round.Round -}</td>
+                  <td class="drawer-score-sm" ng-repeat="hole in round.Holes.slice(9,18)">
+                    <span class="drawer-box" ng-class="parDisplay(hole, parFeedDrawer)" ng-if="hole.Score">{- hole.Score -}</span>
+                  </td>
+                  <td class="drawer-score-md"><span class="drawer-box ld-box-inout">{- round.InTotal -}</span></td>
+                  <td class="drawer-score-md" ng-if="isLandscape(drawerOrientation)"><span class="drawer-box ld-box-total">{- round.ToPar -}</span></td>
+                  <td class="drawer-score-total" ng-if="isLandscape(drawerOrientation)"><span class="drawer-box ld-box-total">{- round.Total -}</span></td>
+                </tr>
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <td class="drawer-score-rounds">
+                    <span class="hidden-md hidden-lg">PAR</span>
+                    <span class="hidden-xs hidden-sm">PAR ({- parFeedDrawer.TotalPar -})</span>
+                  </td>
+
+                  <td class="ld-td-sm" ng-repeat="hole in parFeed.Holes"><span class="ld-th-knockback">{- hole.HoleNumber -}</span>{- hole.Par -}</td>
+
+                  <td class="drawer-score-sm" ng-repeat="hole in parFeedDrawer.Holes.slice(9,18)">{- hole.Par -}</td>
+
+                  <td class="drawer-score-md">{- parFeedDrawer.InPar -}</td>
+                  <td class="drawer-score-md" ng-if="isLandscape(drawerOrientation)"><span class="drawer-box ld-box-total">{- player.TotalPar -}</span></td>
+                  <td class="drawer-score-total" ng-if="isLandscape(drawerOrientation)"><span class="drawer-box ld-box-total">{- player.TotalShots -}</span></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="drawer-pagination clearfix">
+          <span class="drawer-pagination-prev icon icon-chevron-left" ng-class="{'active': isCurrentScorecard(0)}" ng-click="setScorecardPage(0)"></span>
+          <span class="drawer-pagination-page icon" ng-class="{'icon-circle': isCurrentScorecard(0), 'icon-circle-outline': !isCurrentScorecard(0)}" ng-click="setScorecardPage(0)"></span>
+          <span class="drawer-pagination-page icon" ng-class="{'icon-circle': isCurrentScorecard(1), 'icon-circle-outline': !isCurrentScorecard(1)}" ng-click="setScorecardPage(1)"></span>
+          <span class="drawer-pagination-next icon icon-chevron-right" ng-class="{'active': isCurrentScorecard(1)}" ng-click="setScorecardPage(1)"></span>
+      </div>
+    </div>
+  </td>
+</tr>

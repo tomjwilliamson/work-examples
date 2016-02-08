@@ -1,0 +1,212 @@
+---
+title: Leaderboard
+---
+
+<main ng-app="leaderboardApp" ng-cloak>
+
+  <section my-leaderboard-template></section>
+
+  <section championship-state></section>
+
+  <section class="row full-bleed leaderboard" ng-controller="leaderboardController">
+
+    {{>leaderboard-overlay}}
+
+    {{>leaderboard-winner}}
+
+    {{>leaderboard-playoff}}
+
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1 live-control">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <label>SEARCH BY PLAYER NAME</label>
+          <live-search
+            data-search-list="feedData"
+            data-on-select-name="onSelectName($element)"
+            data-on-filtered-elements-changed="filteredElementsChanged($elements)"
+          ></live-search>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <label>CHOOSE YOUR VIEW</label>
+          <div class="row toggle-wrapper">
+            <div class="col-xs-6 control-toggle-left" ng-class="{active:(feedType == 'traditional')}" ng-click="viewToggleClickHandler($event, 'traditional');">
+              <div class="control-view" ng-class="{active:(feedType == 'traditional')}">
+                <span class="control-view-icon">
+                  <span class="icon-stack">
+                    <span class="icon icon-traditional"></span>
+                  </span>
+                </span>
+                <span class="control-view-label">Traditional
+                  <span class="icon-stack icon-lg" ng-show="device == 'device'">
+                    <span class="icon icon-tablet-landscape-frag"></span>
+                    <span class="icon icon-tablet-portrait"></span>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div class="col-xs-6 control-toggle-right" ng-class="{active:(feedType != 'traditional')}" ng-click="viewToggleClickHandler($event, 'holeByHole');">
+              <div class="control-view" ng-class="{active:(feedType != 'traditional')}">
+                <span class="control-view-icon">
+                  <span class="icon-stack">
+                    <span class="icon icon-flag"></span>
+                  </span>
+                </span>
+                <span class="control-view-label">Hole by Hole
+                  <span class="icon-stack icon-lg" ng-show="device == 'device'">
+                    <span class="icon icon-tablet-portrait-frag"></span>
+                    <span class="icon icon-tablet-landscape"></span>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" ng-show="twoTeeStart">
+        <div class="col-xs-12">
+          <p class="tee-start-text">*Player began todays round on Hole 10</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ld-view-container clear-both">
+
+      <section class="row content-overlay display-default" ng-show="showMedia" mediaoverlay>
+        <span class="icon-stack icon-lg close-btn" ng-click="hideMedia();">
+          <span class="icon icon-stack-1x icon-circle-outline"></span>
+          <span class="icon icon-stack-1x icon-close-sm"></span>
+        </span>
+        <div class="message-wrapper text-center">
+          <p>{- mediaType -} - {- mediaPlayerName -}</p>
+          <div class="video-responsive">
+            <div id="kp-single-1" class="streamuk-player"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="col-xs-12 container-blue live-title ldrboard live-padding">
+        <div class="row">
+          <div id="ld-key-tgl" class="ld-key" ng-hide="feedType == 'traditional'">
+            <div class="ld-key-toggle js-slide-toggle open" data-target=".ld-key-content">
+              KEY
+              <span class="icon-stack icon-lg">
+                <span class="icon icon-stack-1x icon-circle-outline"></span>
+                <span class="icon icon-stack-1x timeline-toggle-icon"></span>
+              </span>
+            </div>
+            <div class="ld-key-content-wrapper open">
+              <div class="ld-key-content">
+                <div class="ld-key-content-row">
+                  <div class="ld-key-content-block"><span class="ld-box ld-box-eagle"></span> Eagles/Better</div>
+                  <div class="ld-key-content-block"><span class="ld-box ld-box-birdie"></span> Birdies</div>
+                </div>
+                <div class="ld-key-content-row">
+                  <div class="ld-key-content-block"><span class="ld-box ld-box-bogey"></span> Bogeys</div>
+                  <div class="ld-key-content-block"><span class="ld-box ld-box-dblbogey"></span> Dbl bogeys/worse</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 visible-sm-block">
+            <span class="sprite-branding sprite-mobile-logo"></span>
+          </div>
+
+          <div class="col-md-2 col-md-offset-5 hidden-xs hidden-sm">
+            <span class="sprite-branding sprite-open-logo-lg"></span>
+          </div>
+
+          <div class="col-xs-6 col-sm-3 share-icons">
+            <span class="icon-stack icon-stack-right icon-2x">
+              <span class="icon icon-circle icon-white"></span>
+              <span class="icon icon-share-sm icon-blue"></span>
+            </span>
+            <a href="">
+              <span class="icon-stack icon-stack-right icon-2x">
+                <span class="icon icon-circle-outline"></span>
+                <span class="icon icon-download-sm"></span>
+              </span>
+            </a>
+            <a href="">
+              <span class="icon-stack icon-stack-right icon-2x">
+                <span class="icon icon-circle-outline"></span>
+                <span class="icon icon-print-sm"></span>
+              </span>
+            </a>
+          </div>
+
+          <div class="col-xs-6 col-sm-3 col-md-2 live-patron">
+            <span class="icon sprite-patrons-nttdata"></span>
+            <div class="ld-refresh-primary" ng-show="feedRefreshing && feedDataLoaded && !roundLoading">
+              {{>live-loader}}
+            </div>
+          </div>
+        </div>
+
+        <div class="live-round-select hole-by-hole-view" ng-hide="feedType == 'traditional' || !feedDataLoaded">
+          <label>ROUND</label>
+          <div class="control-radio-single" ng-class="{active:(round == 1), disabled:(championshipFeed.CurrentRound < 1)}">
+            <span class="control-view-label" ng-click="roundSelect($event, 'R1', 'holeByHole');">1</span>
+          </div>
+          <div class="control-radio-single" ng-class="{active:(round == 2), disabled:(championshipFeed.CurrentRound < 2)}">
+            <span class="control-view-label" ng-click="roundSelect($event, 'R2', 'holeByHole');">2</span>
+          </div>
+          <div class="control-radio-single" ng-class="{active:(round == 3), disabled:(championshipFeed.CurrentRound < 3)}">
+            <span class="control-view-label" ng-click="roundSelect($event, 'R3', 'holeByHole');">3</span>
+          </div>
+          <div class="control-radio-single" ng-class="{active:(round == 4), disabled:(championshipFeed.CurrentRound < 4)}">
+            <span class="control-view-label" ng-click="roundSelect($event, 'R4', 'holeByHole');">4</span>
+          </div>
+          <div class="ld-refresh-round" ng-show="roundLoading">
+            {{>live-loader}}
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive live-search-container" ng-view></div>
+
+      <!-- <div class="leaderboard-loadmore">
+        <div class="loadmore" ng-show="!allLoaded">
+          <a href="#" title="Load more players" ng-click="loadRows($event)" ng-if="showLoader == false">Show full leaderboard</a>
+          <a href="#" title="Load more players" ng-click="loadRows($event)" ng-if="showLoader == true">
+            {{>live-loader}}
+          </a>
+        </div>
+      </div> -->
+    </div>
+
+  </section>
+</main>
+
+
+{{>ad-banner}}
+
+{{>leaderboard-mosaic}}
+
+{{>crosslink-small-packages}}
+
+{{>angular-script}}
+
+<!-- load previous opens scripts -->
+<!-- build:js /scripts/live/leaderboard.js -->
+<script src="/scripts/CustomActionTrackingInComScore.js"></script>
+<script src="/scripts/live/leaderboard/app.js"></script>
+<script src="/scripts/live/leaderboard/controllers.js"></script>
+<script src="/scripts/live/leaderboard/filters.js"></script>
+<script src="/scripts/live/module-search.js"></script>
+<script src="/scripts/live/module-chart.js"></script>
+<script src="/scripts/live/module-drawer.js"></script>
+<script src="/scripts/live/championship-status.js"></script>
+<script src="/scripts/live/my-leaderboard.js"></script>
+<script src="/scripts/live/services.js"></script>
+<!-- endbuild -->
+
+<!-- streamUK JS -->
+<script src="http://mp.streamamg.com/p/2000538/sp/200053800/embedIframeJs/uiconf_id/30005189/partner_id/2000538"></script>
+
+<script>
+  $(document).ready(function() {
+    accordilay.init();
+    statsAnim.init({'toAnimate': '.donut-chart'});
+  });
+</script>

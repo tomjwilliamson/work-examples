@@ -1,0 +1,40 @@
+<ion-view class="discussions">
+
+  <ion-nav-buttons side="right">
+    <button class="plus-button" ng-class="showSuggestionBox ? 'rotate' : ''" ng-click="toggleSuggestionBox()">
+      <i class="ion-plus"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <div class="discussion-suggest" ng-show="firstDiscussionLoad">
+    <a class="ion-close" ng-click="suggestClose()"></a>
+    <p>Add your own discussion topic.</p>
+  </div>
+
+  <ion-content>
+
+    <div class="suggest-topic" ng-class="showSuggestionBox ? 'open' : ''" ng-show="showSuggestionBox">
+      <form ng-submit="submit()">
+        <textarea name="comment" ng-model="user.comment" placeholder="Suggest a discussion topic..."></textarea>
+        <button type="submit" ng-click="toggleSuggestionSubmit()">SUBMIT</button>
+      </form>
+    </div>
+
+    <div class="dark-overlay" ng-class="showSuggestionBox ? 'visible' : ''"></div>
+
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="topic in discussions" type="item-text-wrap" href="#/discussions/{{topic.id}}/comments">
+        <h2>{{topic.topic}}</h2>
+        <p class="discussion-content">{{topic.summary}}</p>
+        <div class="item-utils">
+          <p am-time-ago="topic.created_at" ng-if="topic.created_at"></p>
+          <span class="ion-ios-arrow-forward"></span>
+        </div>
+        <div class="item-footer">
+          <p>{{topic.comments}} Comments</p>
+          <p>COMMENT</p>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

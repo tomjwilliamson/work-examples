@@ -1,0 +1,325 @@
+<section class="row full-bleed" ng-hide="poiPositionsDataLoaded || pinPositionsDataLoaded">
+  <div class="col-xs-12 container-blue">
+    <div class="ce-loader">
+      <div class="live-loader">
+        <svg viewBox="0 0 64 64">
+          <g>
+            <circle cx="16" cy="32" stroke-width="0" r="3" fill="currentColor">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5" repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="32" cy="32" stroke-width="0" r="3.7773" fill="currentColor">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5" repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="48" cy="32" stroke-width="0" r="4.7773" fill="currentColor">
+              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6" repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+            </circle>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="course-hole-container" ng-show="poiPositionsDataLoaded || pinPositionsDataLoaded">
+
+  <div class="container-blue hole-title-mobile hidden-md hidden-lg">
+    <h3>Hole {- thisHoleData.HoleNo -} - Hole {- thisHoleData.Name -}</h3>
+    <p>Par {- thisHoleData.Par -} / {- thisHoleData.Yards -} Yards</p>
+  </div>
+
+  <div class="navigation-control hidden-xs hidden-sm">
+
+    <div class="control arrow-left" ng-click="carouselClick(viewType, thisHoleData.HoleNo, 'prev')">
+      <span class="icon icon-lg icon-chevron-left"></span>
+    </div>
+    <div class="navigation-content">
+      <div class="content-section wide">
+        <span class="title">{- thisHoleData.Title -}: </span>
+        <span class="text-content">{- thisHoleData.Name -}</span>
+      </div>
+      <div class="content-section">
+        <span class="title">Par:</span>
+        <span class="text-content">{- thisHoleData.Par -}</span>
+      </div>
+      <div class="content-section">
+        <span class="title">Yards:</span>
+        <span class="text-content">{- thisHoleData.Yards -}</span>
+      </div>
+      <div class="content-section last-section">
+        <img class="content-logo" src="/images/course-explorer/stroke-saver-blue.png" alt="StrokeSaver">
+      </div>
+    </div>
+    <div class="control arrow-right" ng-click="carouselClick(viewType, thisHoleData.HoleNo, 'next')">
+      <span class="icon icon-lg icon-chevron-right"></span>
+    </div>
+
+    <div class="ce-loader" ng-show="updatingView">
+      <div class="live-loader">
+        <svg viewBox="0 0 64 64">
+          <g>
+            <circle cx="16" cy="32" stroke-width="0" r="3" fill="currentColor">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5" repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="32" cy="32" stroke-width="0" r="3.7773" fill="currentColor">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5" repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="48" cy="32" stroke-width="0" r="4.7773" fill="currentColor">
+              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6" repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+            </circle>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="link-section hole-flyover" ng-show="viewType == 'holeView'">
+    <a href="" title="Hole Flyover" class="link-item" ng-click="showPlayerMedia(thisHoleData.HoleFlyover, 'Hole Flyover', '' ,'video')">
+      <span class="ce-icon flyover-icon"></span>
+      <span class="link-text">Hole Flyover</span>
+      <span class="icon-stack icon-lg">
+        <span class="icon icon-circle-outline"></span>
+        <span class="icon icon-chevron-right-sm"></span>
+      </span>
+    </a>
+  </div>
+
+  <div class="link-section hole-flyover" ng-show="viewType == 'greenView'">
+    <a href="" title="Green Flyover" class="link-item" ng-click="showPlayerMedia(thisHoleData.GreenFlyover, 'Green Flyover', '', 'video')">
+      <span class="ce-icon flyover-icon"></span>
+      <span class="link-text">Green Flyover</span>
+      <span class="icon-stack icon-lg">
+        <span class="icon icon-circle-outline"></span>
+        <span class="icon icon-chevron-right-sm"></span>
+      </span>
+    </a>
+  </div>
+
+  <div class="position-relative">
+
+    <section class="content-overlay display-default" ng-show="showMedia" mediaoverlay>
+      <span class="icon-stack icon-lg close-btn pause-on-click" ng-click="hideMedia();">
+        <span class="icon icon-circle-outline"></span>
+        <span class="icon icon-close-sm"></span>
+      </span>
+      <div class="message-wrapper text-center" ng-if="mediaType == 'video'">
+        <h4>{- mediaTitle -}</h4>
+        <div class="video-responsive">
+          <div id="kp-single-1" class="streamuk-player"></div>
+        </div>
+        <p>{- mediaFooter -}</p>
+      </div>
+      <div class="message-wrapper text-center" ng-if="mediaType == 'image'">
+        <h4>{- mediaTitle -}</h4>
+        <img class="img-responsive" ng-src="{- mediaMain -}" alt="{- mediaTitle -}">
+        <p>{- mediaFooter -}</p>
+      </div>
+      <div class="message-wrapper text-center" ng-if="mediaType == 'wildlife'">
+        <h4>{- mediaTitle -}</h4>
+        <img class="img-responsive" ng-src="{- mediaMain -}" alt="{- mediaTitle -}">
+        <p>{- mediaFooter -}</p>
+      </div>
+      <div class="message-wrapper text-center" ng-if="mediaType == 'info'">
+        <h4>{- mediaTitle -}</h4>
+        <p ng-bind-html="mediaMain"></p>
+      </div>
+    </section>
+
+    <div ng-show="viewType == 'holeView'" class="hole-item par4" ng-style="{'left': markerPositionX(thisHoleData.HolePosition.desktop.xpos, thisHoleData.HolePosition.tablet.xpos, thisHoleData.HolePosition.mobile.xpos), 'top': markerPositionY(thisHoleData.HolePosition.desktop.ypos, thisHoleData.HolePosition.tablet.ypos, thisHoleData.HolePosition.mobile.ypos)}">
+      <span>{- thisHoleData.HoleNo -}</span>
+    </div>
+
+    <div ng-show="viewType == 'holeView'">
+      <picture>
+        <!--[if IE 9]><video style="display: none;"><![endif]-->
+        <!-- src for this image should be the following size: 1200x545 -->
+        <source media="(min-width: 1200px)"
+                ng-srcset="{- thisHoleData.ImagePathHole.desktop -}">
+        <!-- src for this image should be the following size: 2048x930 @2x and 1024x465 -->
+        <source media="(min-width: 992px)"
+                ng-srcset="{- thisHoleData.ImagePathHole.desktop -} 2x,
+                        {- thisHoleData.ImagePathHole.desktop -}">
+        <!-- src for this image should be the following size: 1536x700 @2x and 768x350 -->
+        <source media="(min-width: 768px)"
+                ng-srcset="{- thisHoleData.ImagePathHole.tablet -} 2x,
+                        {- thisHoleData.ImagePathHole.tablet -}">
+        <!-- src for this image should be the following size: 640x600 @2x and 320x300 -->
+        <source media="(max-width: 767px)"
+                ng-srcset="{- thisHoleData.ImagePathHole.mobile -} 640w,
+                        {- thisHoleData.ImagePathHole.mobile -} 320w"
+                sizes="100vw">
+        <!--[if IE 9]></video><![endif]-->
+        <img class="img-responsive" ng-src="{- thisHoleData.ImagePathHole.desktop -}" alt="The Old Course, St Andrews">
+      </picture>
+    </div>
+
+    <div ng-show="viewType == 'greenView'">
+      <picture>
+        <!--[if IE 9]><video style="display: none;"><![endif]-->
+        <!-- src for this image should be the following size: 1200x545 -->
+        <source media="(min-width: 1200px)"
+                ng-srcset="{- thisHoleData.ImagePathGreen.desktop -}">
+        <!-- src for this image should be the following size: 2048x930 @2x and 1024x465 -->
+        <source media="(min-width: 992px)"
+                ng-srcset="{- thisHoleData.ImagePathGreen.desktop -} 2x,
+                        {- thisHoleData.ImagePathGreen.desktop -}">
+        <!-- src for this image should be the following size: 1536x700 @2x and 768x350 -->
+        <source media="(min-width: 768px)"
+                ng-srcset="{- thisHoleData.ImagePathGreen.tablet -} 2x,
+                        {- thisHoleData.ImagePathGreen.tablet -}">
+        <!-- src for this image should be the following size: 640x600 @2x and 320x300 -->
+        <source media="(max-width: 767px)"
+                ng-srcset="{- thisHoleData.ImagePathGreen.mobile -} 640w,
+                        {- thisHoleData.ImagePathGreen.mobile -} 320w"
+                sizes="100vw">
+        <!--[if IE 9]></video><![endif]-->
+        <img class="img-responsive" ng-src="{- thisHoleData.ImagePathGreen.desktop -}" alt="The Old Course, St Andrews">
+      </picture>
+    </div>
+
+    <div class="ce-close-green-devices" ng-show="viewType == 'greenView' && device !== 'desktop'" ng-click="viewChangeClick('holeView', thisHoleData.HoleNo)">
+      <span class="icon-stack icon-lg">
+        <span class="icon icon-circle-outline"></span>
+        <span class="icon icon-close-sm"></span>
+      </span>
+    </div>
+
+  </div>
+
+  <div class="poi-positions" ng-show="viewType == 'holeView' && device != 'mobile'">
+    <span ng-repeat="poi in thisPoiPosition" class="hole-item marker-animation poi-{- poi.Type -}" ng-show="markerDisplay()" ng-style="{'left': markerPositionX(poi.Device[0].Desktop.xpos, poi.Device[0].Tablet.xpos), 'top': markerPositionY(poi.Device[0].Desktop.ypos, poi.Device[0].Tablet.ypos) }" ng-click="showPlayerMedia(poi.ContentMain, poi.ContentTitle, poi.ContentFooter, poi.Type)">
+      <span class="icon-stack icon-lg" ng-show="poi.Type == 'video'">
+        <span class="icon icon-poi-video"></span>
+      </span>
+      <span class="icon-stack icon-lg" ng-show="poi.Type == 'info'">
+        <span class="icon icon-poi-info"></span>
+      </span>
+      <span class="icon-stack icon-lg" ng-show="poi.Type == 'image'">
+        <span class="icon icon-poi-image"></span>
+      </span>
+      <span class="icon-stack icon-lg" ng-show="poi.Type == 'wildlife'">
+        <span class="icon icon-poi-wildlife"></span>
+      </span>
+    </span>
+  </div>
+
+  <div class="link-section view-green" ng-show="viewType == 'holeView'">
+    <a href="" title="View Green" class="link-item" ng-click="viewChangeClick('greenView', thisHoleData.HoleNo)">
+      <span class="ce-icon flag-icon"></span>
+      <span class="link-text">View Green</span>
+      <span class="icon-stack icon-lg">
+        <span class="icon icon-circle-outline"></span>
+        <span class="icon icon-chevron-right-sm"></span>
+      </span>
+    </a>
+  </div>
+
+  <div class="pin-positions" ng-show="viewType == 'greenView'">
+    <span ng-repeat="pin in thisPinPosition" class="pin-marker marker-animation" ng-show="markerDisplay()" ng-class="activePin == pin.Day ? 'active-hole' : 'inactive-hole'" ng-style="{'left': markerPositionX(pin.Device[0].Desktop.xpos, pin.Device[0].Tablet.xpos, pin.Device[0].Mobile.xpos), 'top': markerPositionY(pin.Device[0].Desktop.ypos, pin.Device[0].Tablet.ypos, pin.Device[0].Mobile.ypos) }">
+      <span class="pin-day-value">{- pin.Day -}</span>
+    </span>
+  </div>
+
+  <div class="link-section pin-positions-controls hidden-xs hidden-sm" ng-show="viewType == 'greenView'">
+
+    <span class="ce-icon flag-icon"></span>
+    <span class="static-text">Pin Positions</span>
+
+    <div class="pin-selection">
+      <label>Day</label>
+      <div class="days">
+        <div class="control-radio-single" ng-class="setDayPinState(1)" ng-click="setActivePinClick(1)">1</div>
+        <div class="control-radio-single" ng-class="setDayPinState(2)" ng-click="setActivePinClick(2)">2</div>
+        <div class="control-radio-single" ng-class="setDayPinState(3)" ng-click="setActivePinClick(3)">3</div>
+        <div class="control-radio-single" ng-class="setDayPinState(4)" ng-click="setActivePinClick(4)">4</div>
+      </div>
+    </div>
+
+    <a href="" title="Back to hole view" class="link-item" ng-click="viewChangeClick('holeView', thisHoleData.HoleNo)">
+      <span class="icon-stack icon-lg">
+        <span class="icon icon-circle-outline"></span>
+        <span class="icon icon-chevron-left-sm"></span>
+      </span>
+      <span class="link-text">Back to hole view</span>
+    </a>
+  </div>
+
+  <div class="hidden-md hidden-lg pin-positions-controls-mobile" ng-show="viewType == 'greenView'">
+    <label>Select a Day for Pin Positions:</label>
+    <select class="custom-select form-control select-blue" ng-model="activePin">
+      <option ng-hide="initalDay < 1">1</option>
+      <option ng-hide="initalDay < 2">2</option>
+      <option ng-hide="initalDay < 3">3</option>
+      <option ng-hide="initalDay < 4">4</option>
+    </select>
+  </div>
+</div>
+<!-- end course hole container-->
+
+<section class="row full-bleed height-match-fix" ng-show="poiPositionsDataLoaded || pinPositionsDataLoaded">
+  <div class="col-xs-12 col-md-7 container-white">
+    <h3>Hole Description, {- thisHoleData.Name -}</h3>
+    <p ng-bind-html="thisHoleData.Description"></p>
+  </div>
+  <div class="col-xs-12 col-md-5 container-blue height-match">
+    <h4>Hole Stats</h4>
+    <div class="event-info-wrapper">
+      <div class="row">
+        <div class="event-info-content">
+          <p><span class="event-info-title">Hole Par:</span><br>
+          {- thisHoleData.Par -}</p>
+          <p><span class="event-info-title">Hole Yardage:</span><br>
+          {- thisHoleData.Yards -}</p>
+        </div>
+        <div class="event-info-content">
+          <p><span class="event-info-title">Av. Score:</span><br>
+          {- thisHoleData.AverageScore -}</p>
+          <p><span class="event-info-title">Rank:</span><br>
+          {- thisHoleData.Rank -}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row add-small-padding">
+      <div class="event-info-content full-width add-padding-top">
+        <p><span class="event-info-title">Lowest Hole Score Through Four Days:</span><br>
+        {- thisHoleData.LowestScore -}</p>
+      </div>
+    </div>
+    <div class="row add-small-padding">
+      <a href="#" ng-href="{- thisHoleData.HoleStatsLink -}">
+        View Hole Stats
+        <span class="icon-stack icon-stack-left icon-lg">
+          <span class="icon icon-circle-outline"></span>
+          <span class="icon icon-chevron-right-sm"></span>
+        </span></a>
+    </div>
+  </div>
+</section>
+
+<section class="row full-bleed height-match-fix" ng-show="poiPositionsDataLoaded || pinPositionsDataLoaded">
+  <div class="col-xs-12 col-md-5 ce-section-bg hidden-xs hidden-sm">
+    Rory McIlroy
+  </div>
+  <div class="col-xs-12 col-md-7 container-grey-light height-match">
+    <span class="circle-crop circle-border mobile-crop visible-xs visible-sm">
+      <img src="/images/course-explorer/rory-mobile.jpg">
+    </span>
+    <h3 class="heading-with-sub-text colour-blue-dark">Hole Guide: <span class="break-mobile">{- thisHoleData.Title -} - {- thisHoleData.Name -}</span></h3>
+    <p class="colour-blue-dark">By Rory McIlroy</p>
+    <p ng-bind-html="thisHoleData.ProGuideDescription"></p>
+    <p>
+      <a class="colour-blue-dark" href="#" ng-click="changeHole($event, holeNo !== 18 ? holeNo + 1 : 1)">
+        {- thisHoleData.NextHoleTitle -}
+        <span class="icon-stack icon-stack-left icon-lg">
+          <span class="icon icon-circle-outline"></span>
+          <span class="icon icon-chevron-right-sm"></span>
+        </span></a>
+    </p>
+  </div>
+</section>

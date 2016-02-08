@@ -1,0 +1,31 @@
+<ion-view>
+  <ion-content id="more" padding="true">
+    <h2>Details</h2>
+    <form name="more" ng-submit="submit(more)" novalidate>
+      <ul>
+        <li>
+          <input type="text" ng-model="user.username" ng-value="user.username" name="username">
+          <p class="error" ng-show="error">{{error}}</p>
+        </li>
+        <li>
+          <input type="text" ng-model="user.email" ng-value="user.email" readonly>
+        </li>
+        <li>
+          <input type="checkbox" ng-model="user.comms_email" ng-checked="user.comms_email" id="comms_email">
+          <label for="comms_email"></label>
+          <label class="for_comms_email">Allow us to contact you</label>
+          <a ng-click="triggerNotification($event)" class="ion-ios-information-outline"></a>
+        </li>
+        <button type="submit" class="more-btn" ng-hide="more.$pristine || updateSuccess">Save</button>
+      </ul>
+    </form>
+
+    <h2>Legals</h2>
+    <ul class="legals-links">
+      <li><a href="#/terms">Terms &amp; conditions <i class="icon ion-chevron-right"></i></a></li>
+      <li><a href="#/privacy-policy">Privacy policy <i class="icon ion-chevron-right"></i></a></li>
+    </ul>
+
+    <a ng-click="signout()" class="more-btn">Sign Out</a>
+  </ion-content>
+</ion-view>

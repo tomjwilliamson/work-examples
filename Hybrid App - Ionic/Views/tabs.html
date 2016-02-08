@@ -1,0 +1,31 @@
+<!--
+Create tabs with an icon and label, using the tabs-positive style.
+Each tab's child <ion-nav-view> directive will have its own
+navigation history that also transitions its views in and out.
+-->
+<ion-tabs class="tabs-icon-top tabs-color-active-positive main-tabs" ng-controller="MainCtrl" delegate-handle="vibhandle">
+
+  <!-- Dashboard Tab -->
+  <ion-tab title="Newsfeed" href="#/tab/news">
+    <ion-tabs class="tabs-striped tabs-top tabs-icon-only subnav-tabs" delegate-handle="vibhandle">
+      <ion-tab title="News" href="#/tab/newsfeed">
+        <ion-nav-view name="tab-newsfeed"></ion-nav-view>
+      </ion-tab>
+      <ion-tab title="Notifications" href="#/tab/notifications">
+        <ion-nav-view name="tab-notifications"></ion-nav-view>
+      </ion-tab>
+    </ion-tabs>
+  </ion-tab>
+
+  <!-- Discuss Tab -->
+  <ion-tab title="Discuss" href="#/tab/discussions">
+    <ion-nav-view name="tab-discussions"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Account Tab -->
+  <ion-tab title="More" href="#/tab/more">
+    <ion-nav-view name="tab-more"></ion-nav-view>
+  </ion-tab>
+
+
+</ion-tabs>

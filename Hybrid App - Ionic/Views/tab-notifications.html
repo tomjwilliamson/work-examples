@@ -1,0 +1,21 @@
+<ion-view class="notifications has-tabs-top">
+  <ion-content class="notifications-content">
+    <ion-list>
+      <ion-item class="item-remove-animate" ng-repeat="news in notificationData" type="item-text-wrap" href="#/{{news.content_type}}/{{news.id}}/news-article">
+
+        <p class="article-category" ng-if="news.google_hangout_url !== '' && news.content_type === 'Event'" ><span class="ion-android-hangout"></span>Google Hangout</p>
+        <p class="article-category" ng-if="news.google_hangout_url === '' && news.content_type === 'Event'"><span class="ion-android-calendar"></span>Event</p>
+        <p class="article-category" ng-if="news.content_type === 'Competition'"><span class="ion-android-star-outline"></span>Competition</p>
+
+        <h2>{{news.title}}</h2>
+        <p ng-if="news.google_hangout_url === '' && news.content_type === 'Event' && news.when !== '1970-01-01 01:00:00'" class="subheader-date">{{news.when | amDateFormat:'ddd Do MMMM | h:mm'}} | {{news.town != '' ? news.town:news.county}}</p>
+        <p ng-if="news.when === '1970-01-01 01:00:00'">&nbsp;</p>
+        <p ng-if="news.google_hangout_url !== ''" class="subheader-date">{{news.when | amDateFormat:'ddd Do MMMM | h:mm'}}</p>
+        <p ng-if="news.content_type === 'Competition'" class="subheader-date">Closes {{news.close_date | amDateFormat:'ddd Do MMMM'}}</p>
+
+        <p>{{news.summary}}</p>
+
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

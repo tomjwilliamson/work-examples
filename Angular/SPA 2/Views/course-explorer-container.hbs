@@ -1,0 +1,78 @@
+<section class="row full-bleed course-explorer" ng-app="courseExplorerApp" ng-controller="courseExplorerController">
+
+  <div class="course-map feature-image">
+
+    <div class="map-title-desktop">
+      <h3 class="select-hole-title">Select a hole on the map to explore</h3>
+    </div>
+
+    <div class="col-xs-12 map-title-mobile">
+      <div class="row">
+        <div class="col-xs-8 col-sm-8">
+          <h3 class="select-hole-title heading-with-sub-text">Select a Hole Below</h3>
+          <p>Explore the Old Course</p>
+        </div>
+        <div class="col-xs-4 col-sm-4 text-align-right">
+          <span class="sprite-ce sprite-stroke-saver-white appended-logo"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-map-container">
+
+      <picture>
+        <!--[if IE 9]><video style="display: none;"><![endif]-->
+        <!-- src for this image should be the following size: 1200x545 -->
+        <source media="(min-width: 1200px)"
+                srcset="/images/course-explorer/assets/Desktop/map-desktop.jpg">
+        <!-- src for this image should be the following size: 2048x930 @2x and 1024x465 -->
+        <source media="(min-width: 992px)"
+                srcset="/images/course-explorer/assets/Desktop/map-desktop.jpg 2x,
+                        /images/course-explorer/assets/Desktop/map-desktop.jpg">
+        <!-- src for this image should be the following size: 1536x700 @2x and 768x350 -->
+        <source media="(min-width: 768px)"
+                srcset="/images/course-explorer/assets/Tablet/map-tablet.jpg 2x,
+                        /images/course-explorer/assets/Tablet/map-tablet.jpg">
+        <!-- src for this image should be the following size: 640x600 @2x and 320x300 -->
+        <source media="(max-width: 767px)"
+                srcset="/images/course-explorer/assets/Mobile/map-mobile.jpg 640w,
+                        /images/course-explorer/assets/Mobile/map-mobile.jpg 320w"
+                sizes="100vw">
+        <!--[if IE 9]></video><![endif]-->
+        <img class="img-responsive" srcset="/images/course-explorer/assets/Desktop/map-desktop.jpg" alt="The Old Course, St Andrews">
+      </picture>
+
+      <div class="holes-section" ng-animate>
+
+        <div ng-repeat="marker in mapMarkers.MapHoles track by marker.HoleNo" class="hole-item fade-in-scale par{- marker.Par -}" ng-show="mapMarkerDisplay()" ng-click="mapClick('holeView', marker.HoleNo)" ng-style="{'left': markerPositionX(marker.Desktop.xpos, marker.Tablet.xpos, marker.Mobile.xpos), 'bottom': markerPositionY(marker.Desktop.ypos, marker.Tablet.ypos, marker.Mobile.ypos)}">
+          <span>{- marker.HoleNo -}</span>
+        </div>
+
+      </div>
+
+      <div class="key-section">
+        <p>Key:</p>
+        <div class="key-item-wrapper">
+          <div class="hole-item par3">
+            <span>Par 3</span>
+          </div>
+          <div class="hole-item par4">
+            <span>Par 4</span>
+          </div>
+          <div class="hole-item par5">
+            <span>Par 5</span>
+          </div>
+        </div>
+      </div>
+
+     <!--  <span class="compass"></span> -->
+
+    </div>
+    <!-- end map container-->
+
+    <div ng-include="'/templates/sections/course-explorer/overview.html'" ng-if="device != 'desktop'" ng-show="isOverview == false"></div>
+
+    <div class="ce-view" ng-view ng-cloak></div>
+
+  </div>
+</section>

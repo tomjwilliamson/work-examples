@@ -1,0 +1,64 @@
+<ion-view cache-view="false">
+  <ion-nav-buttons side="left">
+    <button id="discussion-back" class="button button-clear" ng-click="goBack()"><i class="icon ion-chevron-left" ></i></button>
+  </ion-nav-buttons>
+  <ion-content ng-class="setClass(newsArticle.content_type, newsArticle.google_hangout_url)" class="has-footer news-item">
+
+    <div>
+
+      <img class="img-responsive" ng-src="{{newsArticle.image_url}}" ng-if="newsArticle.image_url">
+
+      <video id="newsArticle.id" width="480" preload="metadata" controls ng-if="newsArticle.video_url" ng-attr-poster="{{newsArticle.video_poster_url}}">
+        <source type="video/mp4" ng-src="{{newsArticle.safe_video_url}}"></source>
+        <!-- <source type="video/ogg" ng-src="{{newsArticle.safe_video_url}}"></source> -->
+        Your browser does not support HTML5 video.
+      </video>
+
+      <article>
+
+        <p class="article-category" ng-if="newsArticle.content_type === 'Article'"><span class="ion-ios-paper"></span>News</p>
+        <p class="article-category" ng-if="newsArticle.google_hangout_url !== '' && newsArticle.content_type === 'Event'" ><span class="ion-android-hangout"></span>Google Hangout</p>
+        <p class="article-category" ng-if="newsArticle.google_hangout_url === '' && newsArticle.content_type === 'Event'"><span class="ion-android-calendar"></span>Event</p>
+        <p class="article-category" ng-if="newsArticle.content_type === 'Competition'"><span class="ion-android-star-outline"></span>Competition</p>
+
+        <h1>{{ newsArticle.title }}</h1>
+        <p class="tagline" ng-if="newsArticle.tagline">{{newsArticle.tagline}}</p>
+
+        <div class="article-copy">
+          <div class="article-description" ng-bind-html="newsArticle.description"></div>
+
+          <div class="locationCopy" ng-if="newsArticle.google_hangout_url === '' && newsArticle.content_type === 'Event'">
+            <h2 ng-if="newsArticle.address1">Location</h2>
+            <p>
+              <span ng-if="newsArticle.address1">{{newsArticle.address1}},</span>
+              <span ng-if="newsArticle.address2">{{newsArticle.address2}},</span>
+              <span ng-if="newsArticle.town">{{newsArticle.town}},</span>
+              <span ng-if="newsArticle.county">{{newsArticle.county}},</span>
+              <span ng-if="newsArticle.postcode">{{newsArticle.postcode}}</span>
+            </p>
+
+            <ui-gmap-google-map center='map.center' zoom='map.zoom' ng-if="newsArticle.address1">
+              <ui-gmap-marker coords="marker.coords" idkey="1"></ui-gmap-marker>
+            </ui-gmap-google-map>
+
+          </div>
+        </div>
+
+        <a ng-href="{{newsArticle.external_url}}" class="button button-outline button-block" ng-if="newsArticle.content_type === 'Article' && newsArticle.external_url" target="_blank" ng-click="sendEventData({{newsArticle.id}}, 'article')">Website</a>
+        <a ng-href="{{newsArticle.external_url}}" class="button button-outline button-block" ng-if="newsArticle.google_hangout_url !== '' && newsArticle.content_type === 'Event'" target="_blank">Go To Hangout</a>
+
+        <!-- Event Attend/Competition button and response -->
+        <button class="button button-outline button-block" ng-class="postResponse ? 'entered' : ''" ng-if="newsArticle.content_type === 'Competition'" ng-click="userResponse({{newsArticle.id}}, 'competition')">{{enterBtnText}}</button>
+        <button class="button button-outline button-block" ng-class="postResponse ? 'entered' : ''" ng-if="newsArticle.google_hangout_url === '' && newsArticle.content_type === 'Event'" ng-click="userResponse({{newsArticle.id}}, 'event')">{{attendBtnText}}</button>
+
+        <!-- <a href="#/terms" class="terms" ng-if="newsArticle.content_type === 'Competition'">Terms &amp; conditions <i class="icon ion-chevron-right"></i></a> -->
+        <a href="#/terms-comp" class="terms" ng-if="newsArticle.content_type === 'Competition'">Terms &amp; conditions... <i class="icon ion-chevron-right"></i></a>
+
+        <button class="button button-outline button-block share-notification" ng-if="newsArticle.external_url" notification data-description="{{newsArticle.summary}}" data-url="{{newsArticle.external_url}}" data-title="{{newsArticle.title}}" ng-click="sendEventData({{newsArticle.id}}, 'share')">Share</button>
+
+      </article>
+
+    </div>
+  </ion-content>
+
+</ion-view>

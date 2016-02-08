@@ -1,0 +1,88 @@
+<table class="table ld-table ld-primary traditional" sortable>
+  <thead>
+  <tr>
+    <th class="ld-td-fave">FAV</th>
+    <th class="ld-td-md ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'pos' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'pos' && sortRules.order === 'desc'}" ng-click="sortColParams('Position', 'pos', 'asc')">POS</th>
+    <th class="ld-td-md ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'Movers' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'Movers' && sortRules.order === 'desc'}" ng-click="sortColParams('Movers', 'Movers', 'desc')" ng-hide="!isLargeDesktopWidth"><span class="icon icon-position"></span></th>
+    <th class="ld-td-md ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'Hole' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'Hole' && sortRules.order === 'desc'}" ng-click="sortColParams('Hole', 'Hole', 'desc')">HOLE</th>
+    <th class="ld-td-md ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'nation' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'nation' && sortRules.order === 'desc'}" ng-click="sortColParams('Nation', 'nation', 'asc')" ng-hide="!isLargeDesktopWidth">CTRY</th>
+    <th class="ld-td-lg ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'par' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'par' && sortRules.order === 'desc'}" ng-click="sortColParams('Par', 'par', 'asc')">PAR</th>
+    <th class="ld-td-name ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'name' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'name' && sortRules.order === 'desc'}" ng-click="sortColParams('Name', 'name', 'asc')">NAME</th>
+    <th class="ld-td-md" ng-hide="!isLargeDesktopWidth"></th>
+    <th class="ld-td-md" ng-hide="!isLargeDesktopWidth"></th>
+    <th class="ld-td-lg ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'Today' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'Today' && sortRules.order === 'desc'}" ng-click="sortColParams('Today', 'Today', 'asc')">TODAY</th>
+    <th class="ld-td-md ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'R1' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'R1' && sortRules.order === 'desc'}" ng-click="sortColParams('R1', 'R1', 'asc')">R1</th>
+    <th class="ld-td-md ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'R2' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'R2' && sortRules.order === 'desc'}" ng-click="sortColParams('R2', 'R2', 'asc')">R2</th>
+    <th class="ld-td-md ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'R3' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'R3' && sortRules.order === 'desc'}" ng-click="sortColParams('R3', 'R3', 'asc')">R3</th>
+    <th class="ld-td-md ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'R4' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'R4' && sortRules.order === 'desc'}" ng-click="sortColParams('R4', 'R4', 'asc')">R4</th>
+    <th class="ld-td-lg ld-sortable" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'total' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'total' && sortRules.order === 'desc'}" ng-click="sortColParams('Total', 'total', 'desc')">TOTAL</th>
+    <th class="ld-td-expand"></th>
+  </tr>
+  </thead>
+
+  <tbody class="ld-load-initial" ng-if="!feedDataLoaded">
+    <tr>
+      <td colspan="{-getColspan(isLargeDesktopWidth)-}">
+        <div class="live-loader">
+          <svg viewBox="0 0 64 64">
+            <g>
+              <circle cx="16" cy="32" stroke-width="0" r="3" fill="currentColor">
+                <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5" repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+              </circle>
+              <circle cx="32" cy="32" stroke-width="0" r="3.7773" fill="currentColor">
+                <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5" repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+              </circle>
+              <circle cx="48" cy="32" stroke-width="0" r="4.7773" fill="currentColor">
+                <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6" repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+              </circle>
+            </g>
+          </svg>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+
+  <tbody ng-class="{'drawer-open': drawerOpen(player.ID, 'ld-primary'), 'ld-search-match': highlightFilteredElement(player)}" class="{- checkStatus(player.ID, player.Status) -}" ng-repeat="player in feedData | sortColumn:sortObject[sortRules.type][sortRules.order] | limitTo:feedDataAmount track by player.ID" data-id="{- player.ID -}">
+    <tr ng-if="displayCutLine($index)" class="ld-cut-title">
+      <td colspan="{-getColspan(isLargeDesktopWidth)-}"><span>{- championshipFeed.CutlineDisplayText -}</span></td>
+    </tr>
+    <tr class="ld-player-row">
+      <td class="ld-td-fave"><span class="icon ld-favourite" ng-click="updateFavourites(player.ID, $event);" showonhover></span></td>
+      <td class="ld-td-md">{- player.Position.DisplayValue -}</td>
+      <td class="ld-td-md" ng-hide="!isLargeDesktopWidth" ng-bind-html="formatMovers(player)"></td>
+      <td class="ld-td-md">{- player.Hole != 0 ? player.Hole : '' -}</td>
+      <td class="ld-td-md" ng-hide="!isLargeDesktopWidth"><span class="flag-sprite flag-sprite-size-xs flag-sprite-{- player.Nationality.Code | lowercase -}" title="{- player.Nationality.Nation -}"></span></td>
+      <td class="ld-td-lg"><span class="ld-box ld-box-em" ng-if="player.ToPar.length" ng-class="underParDisplay(player.ToPar)">{- player.ToPar -}</span></td>
+      <td class="ld-td-name" ng-click="player.RoundStarted == true ? toggleDrawer($event, player.ID, 'ld-primary') : return"><div class="text-truncate">{- player.Name -}<span ng-if="player.StartTee && player.StartTee !== 1"> (*)</span></div></td>
+      <td class="ld-td-md" ng-hide="!isLargeDesktopWidth"><span class="icon icon-audio" ng-if="player.Audio.length" ng-click="showPlayerMedia(player.Audio, 'Audio', player.Name);"></span></td>
+      <td class="ld-td-md" ng-hide="!isLargeDesktopWidth"><span class="icon icon-video" ng-if="player.Video.length" ng-click="showPlayerMedia(player.Video, 'Video', player.Name);" data-mediaid="player.Video"></span></td>
+      <td class="ld-td-lg"><span class="ld-box ld-box-em" ng-if="player.Today.length" ng-class="underParDisplay(player.Today)">{- player.Today -}</span></td>
+      <td class="ld-td-md"><span class="ld-box" ng-if="player.R1">{- player.R1 -}</span></td>
+      <td class="ld-td-md"><span class="ld-box" ng-if="player.R2">{- player.R2 -}</span></td>
+      <td class="ld-td-md"><span class="ld-box" ng-if="player.R3">{- player.R3 -}</span></td>
+      <td class="ld-td-md"><span class="ld-box" ng-if="player.R4">{- player.R4 -}</span></td>
+      <td class="ld-td-lg"><span class="ld-box ld-box-em" ng-if="player.Total.length">{- player.Total -}</span></td>
+      <td class="ld-td-expand" ng-click="player.RoundStarted == true ? toggleDrawer($event, player.ID, 'ld-primary') : return" ng-class="player.RoundStarted == true ? 'enable' : 'disable'">
+        <span class="icon-stack">
+          <span class="icon icon-plus-sm" ng-hide="currentDrawer.id == player.ID && currentDrawer.context == 'ld-primary'"></span>
+          <span class="icon icon-minus-sm" ng-hide="currentDrawer.id != player.ID"></span>
+          <span class="icon icon-circle-outline"></span>
+        </span>
+      </td>
+    </tr>
+    <tr drawer
+        drawer-id="player.ID"
+        drawer-open="drawerOpen(player.ID, 'ld-primary')"
+        drawer-colspan="getColspan(isLargeDesktopWidth)"
+        drawer-device="device"
+        drawer-orientation="orientation"
+        drawer-scroll-when-updated="'true'"
+        par-feed="parFeed"
+        player-feed-refreshing="feedRefreshing"
+        ng-if="drawerOpen(player.ID, 'ld-primary')">
+    </tr>
+  </tbody>
+</table>

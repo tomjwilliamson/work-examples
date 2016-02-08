@@ -1,0 +1,123 @@
+---
+title: Course Explorer
+---
+
+<section class="row full-bleed position-relative container-hero">
+  <div class="feature-image">
+     <picture>
+      <!--[if IE 9]><video style="display: none;"><![endif]-->
+      <!-- src for this image should be the following size: 1200x545 -->
+      <source media="(min-width: 1200px)"
+              srcset="/images/hero/course-explorer-hero.jpg">
+      <!-- src for this image should be the following size: 2048x930 @2x and 1024x465 -->
+      <source media="(min-width: 992px)"
+              srcset="/images/hero/course-explorer-hero.jpg 2x,
+                      /images/hero/course-explorer-hero.jpg">
+      <!-- src for this image should be the following size: 1536x700 @2x and 768x350 -->
+      <source media="(min-width: 768px)"
+              srcset="/images/hero/course-explorer-hero.jpg 2x,
+                      /images/hero/course-explorer-hero.jpg">
+      <!-- src for this image should be the following size: 640x600 @2x and 320x300 -->
+      <source media="(max-width: 767px)"
+              srcset="/images/hero/course-explorer-hero-mobile.jpg 640w,
+                      /images/hero/course-explorer-hero-mobile.jpg 320w"
+              sizes="100vw">
+      <!--[if IE 9]></video><![endif]-->
+      <img class="img-responsive" srcset="/images/hero/course-explorer-hero.jpg" alt="The Old Course, St Andrews">
+    </picture>
+    <div class="col-xs-12 col-md-4 box-group box-group-top">
+      <div class="box">
+        <h1>The Old Course, St Andrews</h1>
+        <p>One of the oldest courses in the world and a fitting venue for the 144<sup>th</sup> Open.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row full-bleed height-match-fix">
+  <div class="col-xs-12 col-md-7 container-white">
+    <h2>Exploring The Old Course</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+  </div>
+  <div class="col-xs-12 col-md-5 container-blue height-match">
+    <h2>Old Course Stats</h2>
+    <div class="event-info-wrapper">
+      <div class="row">
+        <div class="event-info-content">
+          <p><span class="event-info-title">Course Par:</span><br>
+          72</p>
+          <p><span class="event-info-title">Yardage:</span><br>
+          6721</p>
+        </div>
+        <div class="event-info-content">
+          <p><span class="event-info-title">Last Open:</span><br>
+          139th Open, (2010)</p>
+        </div>
+      </div>
+    </div>
+    <div class="row add-small-padding">
+      <div class="event-info-content full-width add-padding-top">
+        <p><span class="event-info-title">Lowest Opening Round Score at St Andrews:</span><br>
+        63 - Rory McIlroy, 2010</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{>course-explorer-container}}
+
+<section class="row full-bleed feature-image hidden-xs hidden-sm">
+  <div class="carousel captions">
+    <div class="slide">
+      <figure>
+        <img class="img-responsive" src="/images/players/slide1.jpg" alt="Lorem ipsum ...">
+        <figcaption>Slide 1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</figcaption>
+      </figure>
+    </div>
+    <div class="slide">
+      <img class="img-responsive" src="/images/players/slide2.jpg" alt="Lorem ipsum ...">
+      <figcaption>Slide 2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</figcaption>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-4 box position-bottom image-carousel-info">
+    <h3></h3>
+  </div>
+  <img src="/images/sprites/nikon.png" alt="Nikon" width="60" height="60" class="appended-logo carousel-logo">
+</section>
+
+<section class="row full-bleed">
+  <div class="flagbar flagbar-blue col-xs-12">
+    <div class="row add-internal-padding">
+      <div class="col-xs-12 col-sm-7">
+        <h2>Track the Players Around the Course</h2>
+        <p>Find players and groups on the course with Player Locator</p>
+      </div>
+      <div class="col-xs-12 col-sm-5 right-content-link">
+        <a href="#" title="Player Locator">Player Locator
+          <span class="icon-stack icon-lg">
+            <span class="icon icon-circle-outline"></span>
+            <span class="icon icon-chevron-right-sm"></span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{>ad-banner}}
+
+{{>crosslink-small-course-explorer}}
+
+{{>angular-script}}
+
+<!-- load course explorer scripts -->
+<!-- build:js /scripts/course-explorer.js -->
+<script src="/scripts/CustomActionTrackingInComScore.js"></script>
+<script src="/scripts/course-explorer/app.js"></script>
+<script src="/scripts/course-explorer/controllers.js"></script>
+<script src="/scripts/live/services.js"></script>
+<!-- endbuild -->
+
+<!-- streamUK JS -->
+<script src="http://mp.streamamg.com/p/3000215/sp/300021500/embedIframeJs/uiconf_id/30004718/partner_id/3000215"></script>

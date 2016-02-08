@@ -1,0 +1,106 @@
+<table class="table ld-table ld-primary holebyhole" sortable>
+  <thead>
+  <tr>
+    <th class="ld-td-fave">FAV</th>
+    <th class="ld-td-md ld-sortable" ng-click="sortColParams('Position', 'pos', 'asc')" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'pos' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'pos' && sortRules.order === 'desc'}">POS</th>
+    <th class="ld-td-md ld-sortable" ng-hide="!isLargeDesktopWidth" ng-click="sortColParams('Movers', 'Movers', 'desc')" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'Movers' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'Movers' && sortRules.order === 'desc'}"><span class="icon icon-position"></span></th>
+    <th class="ld-td-md ld-sortable" ng-hide="!isLargeDesktopWidth" ng-click="sortColParams('Nation', 'nation', 'asc')" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'nation' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'nation' && sortRules.order === 'desc'}">CTRY</th>
+    <th class="ld-td-name ld-sortable" ng-click="sortColParams('Name', 'name', 'asc')" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'name' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'name' && sortRules.order === 'desc'}">NAME</th>
+    <th class="ld-td-lg ld-sortable" ng-click="sortColParams('Par', 'par', 'asc')" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'par' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'par' && sortRules.order === 'desc'}"><span class="ld-th-knockback">Hole</span>PAR</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[0].HoleNumber -}</span>{- parFeed.Holes[0].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[1].HoleNumber -}</span>{- parFeed.Holes[1].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[2].HoleNumber -}</span>{- parFeed.Holes[2].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[3].HoleNumber -}</span>{- parFeed.Holes[3].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[4].HoleNumber -}</span>{- parFeed.Holes[4].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[5].HoleNumber -}</span>{- parFeed.Holes[5].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[6].HoleNumber -}</span>{- parFeed.Holes[6].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[7].HoleNumber -}</span>{- parFeed.Holes[7].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[8].HoleNumber -}</span>{- parFeed.Holes[8].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[9].HoleNumber -}</span>{- parFeed.Holes[9].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[10].HoleNumber -}</span>{- parFeed.Holes[10].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[11].HoleNumber -}</span>{- parFeed.Holes[11].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[12].HoleNumber -}</span>{- parFeed.Holes[12].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[13].HoleNumber -}</span>{- parFeed.Holes[13].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[14].HoleNumber -}</span>{- parFeed.Holes[14].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[15].HoleNumber -}</span>{- parFeed.Holes[15].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[16].HoleNumber -}</span>{- parFeed.Holes[16].Par -}</th>
+    <th class="ld-td-sm"><span class="ld-th-knockback">{- parFeed.Holes[17].HoleNumber -}</span>{- parFeed.Holes[17].Par -}</th>
+    <th class="ld-td-lg ld-sortable" ng-click="sortColParams('Today', 'Today', 'asc')" ng-class="{'ld-sort ld-sort-asc': sortRules.col === 'Today' && sortRules.order === 'asc', 'ld-sort ld-sort-desc': sortRules.col === 'Today' && sortRules.order === 'desc'}">TODAY</th>
+    <th class="ld-td-expand"></th>
+  </tr>
+  </thead>
+
+  <tbody class="ld-load-initial" ng-if="!feedDataLoaded">
+    <tr>
+      <td colspan="{-getColspan(isLargeDesktopWidth)-}">
+        <div class="live-loader">
+          <svg viewBox="0 0 64 64">
+            <g>
+              <circle cx="16" cy="32" stroke-width="0" r="3" fill="currentColor">
+                <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5" repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+              </circle>
+              <circle cx="32" cy="32" stroke-width="0" r="3.7773" fill="currentColor">
+                <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5" repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+              </circle>
+              <circle cx="48" cy="32" stroke-width="0" r="4.7773" fill="currentColor">
+                <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6" repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+              </circle>
+            </g>
+          </svg>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+
+  <tbody ng-class="{'drawer-open': drawerOpen(player.ID, 'ld-primary'), 'ld-search-match': highlightFilteredElement(player)}" class="{- checkStatus(player.ID, player.Status) -}" ng-repeat="player in feedData | sortColumn:sortObject[sortRules.type][sortRules.order] | limitTo:feedDataAmount track by player.ID" data-id="{- player.ID -}">
+    <tr ng-if="displayCutLine($index)" class="ld-cut-title">
+      <td colspan="{-getColspan(isLargeDesktopWidth)-}"><span>{- championshipFeed.CutlineDisplayText -}</span></td>
+    </tr>
+    <tr class="ld-player-row">
+      <td class="ld-td-fave"><span class="icon ld-favourite" ng-click="updateFavourites(player.ID, $event);" showonhover></span></td>
+      <td class="ld-td-md">{- player.Position.DisplayValue -}</td>
+      <td class="ld-td-md" ng-hide="!isLargeDesktopWidth" ng-bind-html="formatMovers(player)"></td>
+      <td class="ld-td-md" ng-hide="!isLargeDesktopWidth"><span class="flag-sprite flag-sprite-size-xs flag-sprite-{- player.Nationality.Code | lowercase -}" title="{- player.Nationality.Nation -}"></span></td>
+      <td class="ld-td-name" ng-click="player.RoundStarted == true ? toggleDrawer($event, player.ID, 'ld-primary') : return"><div class="text-truncate">{- player.Name -}<span ng-if="player.StartTee && player.StartTee !== 1"> (*)</span></div></td>
+      <td class="ld-td-lg"><span class="ld-box ld-box-em" ng-if="player.ToPar.length" ng-class="underParDisplay(player.ToPar)">{- player.ToPar -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[0], parFeed)" ng-if="player.Holes[0].Score">{- player.Holes[0].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[1], parFeed)" ng-if="player.Holes[1].Score">{- player.Holes[1].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[2], parFeed)" ng-if="player.Holes[2].Score">{- player.Holes[2].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[3], parFeed)" ng-if="player.Holes[3].Score">{- player.Holes[3].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[4], parFeed)" ng-if="player.Holes[4].Score">{- player.Holes[4].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[5], parFeed)" ng-if="player.Holes[5].Score">{- player.Holes[5].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[6], parFeed)" ng-if="player.Holes[6].Score">{- player.Holes[6].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[7], parFeed)" ng-if="player.Holes[7].Score">{- player.Holes[7].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[8], parFeed)" ng-if="player.Holes[8].Score">{- player.Holes[9].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[9], parFeed)" ng-if="player.Holes[9].Score">{- player.Holes[9].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[10], parFeed)" ng-if="player.Holes[10].Score">{- player.Holes[10].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[11], parFeed)" ng-if="player.Holes[11].Score">{- player.Holes[11].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[12], parFeed)" ng-if="player.Holes[12].Score">{- player.Holes[12].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[13], parFeed)" ng-if="player.Holes[13].Score">{- player.Holes[13].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[14], parFeed)" ng-if="player.Holes[14].Score">{- player.Holes[14].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[15], parFeed)" ng-if="player.Holes[15].Score">{- player.Holes[15].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[16], parFeed)" ng-if="player.Holes[16].Score">{- player.Holes[16].Score -}</span></td>
+      <td class="ld-td-sm"><span class="ld-box" ng-class="parDisplay(player.Holes[17], parFeed)" ng-if="player.Holes[17].Score">{- player.Holes[17].Score -}</span></td>
+      <td class="ld-td-lg"><span class="ld-box ld-box-em" ng-if="player.Today.length" ng-class="underParDisplay(player.Today)">{- player.Today -}</span></td>
+      <td class="ld-td-expand" ng-click="player.RoundStarted == true ? toggleDrawer($event, player.ID, 'ld-primary') : return" ng-class="player.RoundStarted == true ? 'enable' : 'disable'">
+        <span class="icon-stack">
+          <span class="icon icon-plus-sm" ng-hide="currentDrawer.id == player.ID && currentDrawer.context == 'ld-primary'"></span>
+          <span class="icon icon-minus-sm" ng-hide="currentDrawer.id != player.ID"></span>
+          <span class="icon icon-circle-outline"></span>
+        </span>
+      </td>
+    </tr>
+    <tr drawer
+        drawer-id="player.ID"
+        drawer-open="drawerOpen(player.ID, 'ld-primary')"
+        drawer-colspan="getColspan(isLargeDesktopWidth)"
+        drawer-scroll-when-updated="'true'"
+        par-feed="parFeed"
+        player-feed-refreshing="feedRefreshing"
+        ng-if="drawerOpen(player.ID, 'ld-primary')">
+    </tr>
+  </tbody>
+</table>
